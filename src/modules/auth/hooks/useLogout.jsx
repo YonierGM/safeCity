@@ -39,18 +39,16 @@ export function useLogout() {
                 throw new Error(result?.message || "Error al cerrar sesión.");
             }
 
-            // 🔒 Elimina el token aunque haya error al parsear
+            // Elimina el token aunque haya error al parsear
             localStorage.removeItem("token");
-            localStorage.removeItem("user");
 
             showErrorToast("Sesión cerrada correctamente.");
             navigate("/login");
         } catch (error) {
             console.error("Error en logout:", error);
             showErrorToast(error.message || "Error al cerrar sesión.");
-
+            // Aun si hay error, elimina el token para forzar logout local
             localStorage.removeItem("token");
-            localStorage.removeItem("user");
             navigate("/login");
         } finally {
             setLoading(false);

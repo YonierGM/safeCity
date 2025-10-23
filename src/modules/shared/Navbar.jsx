@@ -85,8 +85,8 @@ export function Navbar() {
                                     title="Cerrar sesión"
                                 />
                                 <span className="ms-2 text-lg font-normal truncate w-40 block">yoniermosquera55@gmail.com</span>
-                                <Link to="/">
-                                    <RiExpandUpDownLine className="text-xl" title="Resetear contraseña" />
+                                <Link to="/home/forgot-password" >
+                                    <RiExpandUpDownLine className="text-xl" title="Configuraciones" />
                                 </Link>
                             </div>
                         </li>

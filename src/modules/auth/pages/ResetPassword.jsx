@@ -8,6 +8,7 @@ import { useResetPassword } from "../hooks/useResetPassword";
 import { useAuthUser } from "../../users/hooks/useAuthUser";
 import { resetPasswordSchema } from "../schemas/resetPasswordSchema";
 import { PasswordInput } from "../components/PasswordInput";
+import { useAuthContext } from "../../context/AuthProvider";
 
 export function ResetPassword() {
     const navigate = useNavigate();
@@ -17,6 +18,8 @@ export function ResetPassword() {
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
     const email = searchParams.get("email");
+
+    const { logout } = useAuthContext();
 
     const {
         register,
@@ -54,7 +57,11 @@ export function ResetPassword() {
             email,
         };
         await resetPasswordHook(payload);
-        reset();
+        reset({
+            email, // mantener email
+            password: '',
+            password_confirmation: '',
+        });
     };
 
     const asideContent = {
@@ -121,8 +128,8 @@ export function ResetPassword() {
                                 {loading ? "Actualizando..." : "Actualizar contraseña"}
                             </button>
                             <Link
-                                to="/login"
-                                className="text-center w-full py-2 px-5 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-100"
+                                onClick={logout}
+                                className="text-center w-full py-2 px-5 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-100 cursor-pointer"
                             >
                                 Volver al inicio de sesión
                             </Link>

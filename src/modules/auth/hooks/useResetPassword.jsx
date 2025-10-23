@@ -5,7 +5,6 @@ export function useResetPassword() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-
     const resetPasswordHook = async (data) => {
         setLoading(true);
         setError(null);
@@ -24,20 +23,22 @@ export function useResetPassword() {
                     password_confirmation: data.password_confirmation,
                 }),
             });
+
             console.log("data enviada desde hook:", data);
 
-            const result = await response.json();
-
+            // se espera un 204
             if (!response.ok) {
-                const errorMsg =
-                    result?.message ||
-                    result?.error ||
-                    "Error al restablecer la contraseña.";
-                throw new Error(errorMsg);
+                // Intenta parsear JSON solo si hay contenido
+                let errorResult = {};
+                try {
+                    const text = await response.text();
+                    if (text) errorResult = JSON.parse(text);
+                } catch { }
+                throw new Error(errorResult.message || "Error al restablecer la contraseña.");
             }
 
-            showErrorToast("✅ Contraseña actualizada correctamente.");
-            return result;
+            showErrorToast("Contraseña actualizada correctamente.");
+            return true; // no hay JSON que devolver
         } catch (err) {
             setError(err.message);
             showErrorToast(err.message);

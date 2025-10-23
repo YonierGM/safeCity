@@ -6,6 +6,7 @@ import { useAuthContext } from './modules/context/AuthProvider';
 import { Toaster } from 'react-hot-toast';
 import HomeRoutes from "./modules/home/routes/HomeRoutes";
 import { ResetPassword } from "./modules/auth/pages/ResetPassword"; // 👈 importa directamente
+import { ForgotPassword } from "./modules/auth/pages/ForgotPassword";
 
 function App() {
   const { isAuthenticated } = useAuthContext();
@@ -17,8 +18,10 @@ function App() {
         {/* Redirección raíz */}
         <Route path="/" element={<Navigate to={isAuthenticated ? "/home" : "/login"} replace />} />
 
-        {/* ✅ Ruta pública para reset-password */}
+        {/* Ruta pública para reset-password */}
         <Route path="/reset-password" element={<ResetPassword />} />
+        {/* Ruta pública para forgot-password */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         {/* Rutas de autenticación */}
         <Route

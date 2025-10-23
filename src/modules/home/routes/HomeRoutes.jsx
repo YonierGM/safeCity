@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { Navbar } from "../../shared/Navbar";
-import { ResetPassword } from "../../auth/pages/ResetPassword";
 import { Categories } from "../pages/categories";
+import { ForgotPassword } from "../../auth/pages/ForgotPassword";
 
 const HomeRoutes = () => {
     return (
@@ -13,7 +13,7 @@ const HomeRoutes = () => {
             <div className="content">
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/categories" element={<Categories />} />
                 </Routes>
             </div>

@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from "react";
 import { useLogout } from "../auth/hooks/useLogout";
 import { useAuth } from "../auth/hooks/useAuth";
 
+import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -12,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     const { loginHook } = useAuth();
     const { logout: logoutUser } = useLogout();
 
-    // 🔹 Iniciar sesión
+    // Iniciar sesión
     const login = async (email, password) => {
         setLoading(true);
         try {
@@ -27,12 +29,35 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    // 🔹 Cerrar sesión
+    // Cerrar sesión
     const logout = async () => {
-        setLoading(true);
         try {
+            setLoading(true);
+
             await logoutUser();
             setToken(null);
+            setLoading(false);
+
+            // Confirm.show(
+            //     'Cerrar sesión',
+            //     '¿Estás seguro que deseas cerrar sesión?',
+            //     'Si',
+            //     'No',
+            //     async () => {
+            //         setLoading(true);
+
+            //         await logoutUser();
+            //         setToken(null);
+            //         setLoading(false);
+            //     },
+            //     () => {
+
+            //     },
+            //     {
+            //         titleColor: '#000000',
+
+            //     },
+            // );
         } finally {
             setLoading(false);
         }
