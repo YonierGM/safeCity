@@ -1,16 +1,29 @@
-# React + Vite
+# SafeCity App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación web desarrollada con **React** y **Vite** para la gestión de usuarios, incidentes y categorías. Implementa **autenticación**, **rutas protegidas** y **modularización por contextos**.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Sistema de **login/logout** con JWT y almacenamiento en localStorage.
+- **Rutas públicas y protegidas** según el estado de autenticación.
+- Gestión de usuarios, incidentes y categorías.
+- **Validación de formularios** con **Zod** y react-hook-form.
+- **Reset de contraseña** via email mediante token.
+- Notificaciones con **react-hot-toast**.
+- Diseño responsive y modular.
 
-## React Compiler
+## Tecnologías
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- **Frontend:** React, Vite, TailwindCSS, react-icons, react-router-dom
+- **State Management:** React Context
+- **Form Validation:** Zod + react-hook-form
+- **Notificaciones:** react-hot-toast
+- **Fetch API:** para consumir endpoints de backend
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone https://github.com/YonierGM/safeCity
+cd safeCity
+npm install
+npm run dev
