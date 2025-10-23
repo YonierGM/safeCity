@@ -15,6 +15,7 @@ const HomeRoutes = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/categories" element={<Categories />} />
+                    <Route path="*" element={<Navigate to="/home" replace />} />
                 </Routes>
             </div>
         </section>

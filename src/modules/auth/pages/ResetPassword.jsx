@@ -1,19 +1,16 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Aside } from "../components/Aside";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Loading } from "notiflix/build/notiflix-loading-aio";
 import { useEffect } from "react";
 import { useResetPassword } from "../hooks/useResetPassword";
-import { useAuthUser } from "../../users/hooks/useAuthUser";
 import { resetPasswordSchema } from "../schemas/resetPasswordSchema";
 import { PasswordInput } from "../components/PasswordInput";
 import { useAuthContext } from "../../context/AuthProvider";
 
 export function ResetPassword() {
-    const navigate = useNavigate();
     const { resetPasswordHook, loading } = useResetPassword();
-    const { user, loadingUser } = useAuthUser();
 
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
@@ -39,7 +36,7 @@ export function ResetPassword() {
     }, [email, setValue]);
 
     useEffect(() => {
-        if (loading || loadingUser) {
+        if (loading) {
             Loading.circle("Cargando...", {
                 svgColor: "#000000",
                 backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -47,7 +44,7 @@ export function ResetPassword() {
         } else {
             Loading.remove();
         }
-    }, [loading, loadingUser]);
+    }, [loading]);
 
     const onSubmit = async (data) => {
         // Agregar token y email provenientes de la URL
@@ -123,16 +120,17 @@ export function ResetPassword() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full px-5 py-2 text-base font-medium text-white bg-black rounded-lg hover:opacity-95"
+                                className="w-full px-5 py-2 text-base font-medium text-white bg-black rounded-lg hover:opacity-95 cursor-pointer"
                             >
                                 {loading ? "Actualizando..." : "Actualizar contraseña"}
                             </button>
-                            <Link
+                            <button
+                                type="button"
                                 onClick={logout}
                                 className="text-center w-full py-2 px-5 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-100 cursor-pointer"
                             >
                                 Volver al inicio de sesión
-                            </Link>
+                            </button>
                         </div>
                     </form>
                 </div>

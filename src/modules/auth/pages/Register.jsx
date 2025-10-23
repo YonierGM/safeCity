@@ -2,14 +2,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "../schemas/registerSchema";
 import { Aside } from "../components/Aside";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { useEffect } from "react";
 import { PasswordInput } from "../components/PasswordInput";
+
 export function Register() {
 
   const { registerHook, loading, error } = useRegister();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -35,9 +37,8 @@ export function Register() {
   const onSubmit = async (data) => {
     const result = await registerHook(data);
     if (result) {
-      console.log("✅ Usuario creado:", result);
       reset();
-      Navigate("/login");
+      navigate("/login");
     }
   };
 

@@ -35,6 +35,7 @@ export function useRegister() {
             }
 
             setUser(data.data);
+            showErrorToast("usuario creado de manera exitosa");
             return data.data;
 
         } catch (err) {
