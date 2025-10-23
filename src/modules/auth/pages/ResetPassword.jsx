@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useResetPassword } from "../hooks/useResetPassword";
 import { useAuthUser } from "../../users/hooks/useAuthUser";
 import { resetPasswordSchema } from "../schemas/resetPasswordSchema";
+import { PasswordInput } from "../components/PasswordInput";
 
 export function ResetPassword() {
     const navigate = useNavigate();
@@ -89,38 +90,26 @@ export function ResetPassword() {
                                 type="email"
                                 {...register("email")}
                                 disabled
-                                className="bg-gray-100 border border-gray-300 text-gray-500 rounded-lg block w-full p-2.5 cursor-not-allowed"
+                                className="bg-gray-50 border px-3 py-1 text-base border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             />
                         </div>
 
                         <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Nueva contraseña
-                            </label>
-                            <input
-                                type="password"
-                                {...register("password")}
-                                placeholder="••••••••"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
-                                required
+                            <PasswordInput
+                                label="Nueva contraseña"
+                                name="password"
+                                register={register}
+                                errors={errors}
                             />
-                            {errors.password && <p className="text-red-400 text-xs">{errors.password.message}</p>}
                         </div>
 
                         <div>
-                            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Confirmar contraseña
-                            </label>
-                            <input
-                                type="password"
-                                {...register("password_confirmation")}
-                                placeholder="••••••••"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg block w-full p-2.5"
-                                required
+                            <PasswordInput
+                                label="confirmar Contraseña"
+                                name="password_confirmation"
+                                register={register}
+                                errors={errors}
                             />
-                            {errors.password_confirmation && (
-                                <p className="text-red-400 text-xs">{errors.password_confirmation.message}</p>
-                            )}
                         </div>
 
                         <div className="flex flex-col gap-2">

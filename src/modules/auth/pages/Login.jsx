@@ -9,6 +9,7 @@ import { Aside } from "../components/Aside";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { useEffect } from "react";
 import { useAuthContext } from "../../context/AuthProvider";
+import { PasswordInput } from "../components/PasswordInput";
 
 export function Login() {
 
@@ -78,10 +79,12 @@ export function Login() {
                   {errors.email && <p className="text-shadow-amber-800 text-red-400 text-xs">{errors.email.message}</p>}
                 </div>
                 <div className="grid gap-2 m-0">
-                  <label htmlFor="password" className="blocktext-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                  <input type="password" {...register("password")} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border px-3 py-1 text-base border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-
-                  {errors.password && <p className="text-shadow-amber-800 text-red-400 text-xs">{errors.password.message}</p>}
+                  <PasswordInput
+                    label="Contraseña"
+                    name="password"
+                    register={register}
+                    errors={errors}
+                  />
                   <div className="flex items-start">
                     <Link to="/forgot-password" className="text-xs font-normal text-black hover:underline dark:text-black">¿Olvidaste tu contraseña?</Link>
                   </div>

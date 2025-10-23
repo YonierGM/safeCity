@@ -6,6 +6,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { useEffect } from "react";
+import { PasswordInput } from "../components/PasswordInput";
 export function Register() {
 
   const { registerHook, loading, error } = useRegister();
@@ -90,16 +91,19 @@ export function Register() {
                   {errors.email && <p className="text-shadow-amber-800 text-red-400 text-xs">{errors.email.message}</p>}
                 </div>
                 <div>
-                  <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
-                  <input type="password" {...register("password")} name="password" id="password" placeholder="••••••••" className="bg-gray-50 border px-3 py-1 text-base border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-
-                  {errors.password && <p className="text-shadow-amber-800 text-red-400 text-xs">{errors.password.message}</p>}
-                </div>
+                  <PasswordInput
+                    label="Contraseña"
+                    name="password"
+                    register={register}
+                    errors={errors}
+                  /></div>
                 <div>
-                  <label htmlFor="password_confirmation" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmar contraseña</label>
-                  <input type="password" {...register("password_confirmation")} name="password_confirmation" id="password_confirmation" placeholder="••••••••" className="bg-gray-50 border px-3 py-1 text-base border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-
-                  {errors.password_confirmation && <p className="text-shadow-amber-800 text-red-400 text-xs">{errors.password_confirmation.message}</p>}
+                  <PasswordInput
+                    label="confirmar Contraseña"
+                    name="password_confirmation"
+                    register={register}
+                    errors={errors}
+                  />
                 </div>
                 <button type="submit" disabled={loading} className="w-full px-5 py-2 m-0 text-base font-medium text-center text-white bg-black rounded-lg hover:opacity-95 focus:ring-4 focus:ring-black sm:w-full dark:bg-black dark:hover:bg-black dark:focus:ring-black cursor-pointer">
                   {loading ? "Creando..." : "Crear cuenta"}
