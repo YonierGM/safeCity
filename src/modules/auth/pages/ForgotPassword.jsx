@@ -12,7 +12,7 @@ import { useAuthContext } from "../../context/AuthProvider";
 export function ForgotPassword() {
 
     const { forgotPasswordHook, loading, error } = useForgotPassword();
-    const { logout } = useAuthContext();
+    const { logout, loading: loadingLogout } = useAuthContext();
 
     const token = localStorage.getItem("token");
 
@@ -26,7 +26,7 @@ export function ForgotPassword() {
     });
 
     useEffect(() => {
-        if (loading) {
+        if (loading || loadingLogout && token) {
             Loading.circle("", {
                 svgColor: "#000000",
                 backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -35,7 +35,7 @@ export function ForgotPassword() {
         } else {
             Loading.remove();
         }
-    }, [loading]);
+    }, [loading, loadingLogout]);
 
     const onSubmit = async (data) => {
         const result = await forgotPasswordHook(data.email);
@@ -69,7 +69,7 @@ export function ForgotPassword() {
 
                             </div>
 
-                            <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                            <form className="mt-8 space-y-6 mb-2" onSubmit={handleSubmit(onSubmit)}>
                                 <div>
                                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Correo electrónico</label>
                                     <input type="email" {...register("email")} name="email" id="email" className="bg-gray-50 border px-3 py-1 text-base border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="tucorreo@ejemplo.com" required />
@@ -82,11 +82,11 @@ export function ForgotPassword() {
                                     <button type="submit" disabled={loading} className="w-full px-5 py-2 m-0 text-base font-medium text-center text-white bg-black rounded-lg hover:opacity-95 focus:ring-4 focus:ring-black sm:w-full dark:bg-black dark:hover:bg-black dark:focus:ring-black cursor-pointer">
                                         {loading ? "Enviando..." : "Enviar enlace de restablecimiento"}
                                     </button>
-                                    <div className="w-full flex text-center">
-                                        <button type="submit" onClick={logout} className="w-full py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer">{token ? "Cerrar sesión" : "Iniciar sesión"}</button>
-                                    </div>
                                 </div>
                             </form>
+                            <div className="w-full flex text-center">
+                                <button type="submit" onClick={logout} className="w-full py-2 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-black focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer">{token ? "Cerrar sesión" : "Iniciar sesión"}</button>
+                            </div>
                         </div>
                     </div>
                 </div>

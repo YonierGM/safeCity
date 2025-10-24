@@ -9,12 +9,19 @@ import { FaUserCircle } from "react-icons/fa";
 import { useAuthContext } from "../context/AuthProvider";
 import { Loading } from 'notiflix/build/notiflix-loading-aio';
 import { useEffect } from "react";
+import { useAuthUser } from "../users/hooks/useAuthUser";
+
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export function Navbar() {
     const { logout, loading } = useAuthContext();
+    const { user, loadingUser, error } = useAuthUser();
+
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
-        if (loading) {
+        if (loading || loadingUser && token) {
             Loading.circle("", {
                 svgColor: "#000000",
                 backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -23,8 +30,7 @@ export function Navbar() {
         } else {
             Loading.remove();
         }
-    }, [loading]);
-
+    }, [loading, loadingUser]);
     return (
         <>
             <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ms-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
@@ -76,23 +82,39 @@ export function Navbar() {
                                 <span className="ms-2 text-lg font-normal">Incidentes</span>
                             </Link>
                         </li>
-                        <li className="relative top-55 w-full ">
-                            <div className="flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <li className="relative top-55 w-full">
+                            {error ? (
+                                <p className="text-sm text-red-600 text-center">Error al cargar usuario</p>
+                            ) : (
 
-                                <FaUserCircle
-                                    onClick={logout}
-                                    className={`text-xl cursor-pointer ${loading ? "opacity-50" : ""}`}
-                                    title="Cerrar sesión"
-                                />
-                                <span className="ms-2 text-lg font-normal truncate w-40 block">yoniermosquera55@gmail.com</span>
-                                <Link to="/home/forgot-password" >
-                                    <RiExpandUpDownLine className="text-xl" title="Configuraciones" />
-                                </Link>
-                            </div>
+                                loadingUser ? (
+                                    <div className="flex items-center justify-between gap-3 p-2" >
+                                        <Skeleton circle={true} height={24} width={24} />
+                                        <Skeleton width={120} height={8} />
+                                        <Skeleton width={20} height={24} />
+                                    </div>
+                                ) : (
+                                    <div className="flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white">
+                                        <FaUserCircle
+                                            onClick={logout}
+                                            className={`text-xl cursor-pointer ${loading ? "opacity-50" : ""}`}
+                                            title="Cerrar sesión"
+                                        />
+                                        <span className="ms-2 text-lg font-normal truncate w-40 block">
+                                            {user?.email || "Usuario no disponible"}
+                                        </span>
+                                        <Link to="/home/forgot-password">
+                                            <RiExpandUpDownLine className="text-xl" title="Configuraciones" />
+                                        </Link>
+                                    </div>
+                                )
+                            )}
+
                         </li>
+
                     </ul>
                 </div>
-            </aside>
+            </aside >
         </>
     );
 }

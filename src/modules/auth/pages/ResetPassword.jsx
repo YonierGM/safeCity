@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Aside } from "../components/Aside";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Loading } from "notiflix/build/notiflix-loading-aio";
 import { useEffect } from "react";
 import { useResetPassword } from "../hooks/useResetPassword";
@@ -14,9 +14,22 @@ export function ResetPassword() {
 
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
+    const tokenLogin = localStorage.getItem("token");
     const email = searchParams.get("email");
 
-    const { logout } = useAuthContext();
+    const { logout, loading: loadingLogout } = useAuthContext();
+
+    useEffect(() => {
+        if (loading || loadingLogout && tokenLogin) {
+            Loading.circle("", {
+                svgColor: "#000000",
+                backgroundColor: "rgba(255, 255, 255, 0.8)",
+                clickToClose: false,
+            });
+        } else {
+            Loading.remove();
+        }
+    }, [loading, loadingLogout]);
 
     const {
         register,
@@ -116,7 +129,7 @@ export function ResetPassword() {
                             />
                         </div>
 
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-2 mb-2">
                             <button
                                 type="submit"
                                 disabled={loading}
@@ -124,15 +137,15 @@ export function ResetPassword() {
                             >
                                 {loading ? "Actualizando..." : "Actualizar contraseña"}
                             </button>
-                            <button
-                                type="button"
-                                onClick={logout}
-                                className="text-center w-full py-2 px-5 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-100 cursor-pointer"
-                            >
-                                Volver al inicio de sesión
-                            </button>
                         </div>
                     </form>
+                    <button
+                        type="button"
+                        onClick={logout}
+                        className="text-center w-full py-2 px-5 text-sm font-medium text-gray-700 border rounded-lg hover:bg-gray-100 cursor-pointer"
+                    >
+                        Volver al inicio de sesión
+                    </button>
                 </div>
             </div>
         </section>

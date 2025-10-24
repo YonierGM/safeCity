@@ -12,7 +12,7 @@ export function useLogout() {
         try {
             const token = localStorage.getItem("token");
             if (!token) {
-                showErrorToast("No hay sesión activa.");
+                // showErrorToast("No hay sesión activa.");
                 navigate("/login");
                 return;
             }

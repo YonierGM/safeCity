@@ -5,6 +5,7 @@ import { showErrorToast } from "../../shared/toast";
 export function useAuthUser() {
     const [user, setUser] = useState(null);
     const [loadingUser, setLoadingUser] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -33,6 +34,7 @@ export function useAuthUser() {
                 setUser(email ? { email } : null);
             } catch (error) {
                 showErrorToast(error.message);
+                setError(error.message);
             } finally {
                 setLoadingUser(false);
             }
@@ -41,5 +43,5 @@ export function useAuthUser() {
         fetchUser();
     }, []);
 
-    return { user, loadingUser };
+    return { user, loadingUser, error };
 }
