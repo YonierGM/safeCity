@@ -3,6 +3,7 @@ import { Home } from "../pages/Home";
 import { Navbar } from "../../shared/Navbar";
 import { Categories } from "../pages/categories";
 import { ForgotPassword } from "../../auth/pages/ForgotPassword";
+import { Incidents } from "../pages/Incidents";
 
 const HomeRoutes = () => {
     return (
@@ -15,6 +16,7 @@ const HomeRoutes = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/categories" element={<Categories />} />
+                    <Route path="/incidentes" element={<Incidents />} />
                     <Route path="*" element={<Navigate to="/home" replace />} />
                 </Routes>
             </div>

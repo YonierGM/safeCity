@@ -23,7 +23,7 @@ export function PasswordInput({ label, register, name, errors, placeholder = "â€
                 <button
                     type="button"
                     onClick={togglePassword}
-                    className="absolute inset-y-0 right-2 flex items-center px-2 text-gray-500"
+                    className="absolute inset-y-0 right-2 flex items-center px-2 text-gray-500 cursor-pointer"
                 >
                     {showPassword ? <FaRegEyeSlash className="h-5 w-5" /> : <FaRegEye className="h-5 w-5" />}
                 </button>
