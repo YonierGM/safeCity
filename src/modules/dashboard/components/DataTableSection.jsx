@@ -1,5 +1,6 @@
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { ModalCreateInciden } from "./ModalCreateInciden";
 
 export function DataTableSection({
     title,
@@ -7,37 +8,55 @@ export function DataTableSection({
     titleTable,
     descriptionTable,
     buttonText,
-    onButtonClick,
     loading,
     error,
     data,
     columns,
-    renderRow
+    renderRow,
 }) {
     return (
         <section className="space-y-6">
+            {/* 🔹 Header section */}
             <div className="flex items-center justify-between mb-4">
                 <div>
-                    <h1 className="text-2xl font-bold">{title}</h1>
-                    <p className="text-md text-gray-600">{description}</p>
+                    {loading ? (
+                        <>
+                            <Skeleton width={200} height={28} />
+                            <Skeleton width={300} height={18} />
+                        </>
+                    ) : (
+                        <>
+                            <h1 className="text-2xl font-bold">{title}</h1>
+                            <p className="text-md text-gray-600">{description}</p>
+                        </>
+                    )}
                 </div>
+
                 <div>
-                    <button
-                        type="button"
-                        onClick={onButtonClick}
-                        className="flex items-center gap-2 text-white bg-black hover:bg-black focus:ring-4 focus:ring-black font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-black dark:hover:bg-black focus:outline-none dark:focus:ring-black cursor-pointer"
-                    >
-                        {buttonText}
-                    </button>
+                    {!loading && (
+                        <ModalCreateInciden
+                            buttonText={buttonText}
+                        />
+                    )}
                 </div>
             </div>
 
+            {/* 🔹 Table section */}
             <div className="md:w-full mx-auto p-4 rounded-2xl shadow-lg space-y-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                 <div className="title flex flex-col">
-                    <p className="text-lg font-semibold text-gray-800 dark:text-gray-100 m-0">
-                        {titleTable}
-                    </p>
-                    <p className="text-md text-gray-600">{descriptionTable}</p>
+                    {loading ? (
+                        <>
+                            <Skeleton width={150} height={22} />
+                            <Skeleton width={250} height={16} />
+                        </>
+                    ) : (
+                        <>
+                            <p className="text-lg font-semibold text-gray-800 dark:text-gray-100 m-0">
+                                {titleTable}
+                            </p>
+                            <p className="text-md text-gray-600">{descriptionTable}</p>
+                        </>
+                    )}
                 </div>
 
                 {error ? (

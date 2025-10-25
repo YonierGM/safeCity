@@ -5,7 +5,7 @@ import { Categories } from "../pages/categories";
 import { ForgotPassword } from "../../auth/pages/ForgotPassword";
 import { Incidents } from "../pages/Incidents";
 
-const HomeRoutes = () => {
+const DashboardRoutes = () => {
     return (
         <section className="grid md:grid-cols-[320px_1fr] p-3">
             <div className="aside">
@@ -17,11 +17,11 @@ const HomeRoutes = () => {
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/categories" element={<Categories />} />
                     <Route path="/incidentes" element={<Incidents />} />
-                    <Route path="*" element={<Navigate to="/home" replace />} />
+                    <Route path="*" element={<Navigate to="/dashboard" replace />} />
                 </Routes>
             </div>
         </section>
     );
 };
 
-export default HomeRoutes;
+export default DashboardRoutes;
